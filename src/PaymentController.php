@@ -7,8 +7,18 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+	public $configPaytm;
+	public $encdecPaytm;
+
+	public function __construct()
+	{
+		require_once(__DIR__.'/paytm/lib/config_paytm.php');
+		require_once(__DIR__.'/paytm/lib/encdec_paytm.php');
+	}
+
     public function index()
     {
-    	dd('check is payment');
+    	dd(encrypt_e('ASC', 'DESC'));
+    	//dd($this->configPaytm);
     }
 }
