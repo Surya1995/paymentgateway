@@ -1,0 +1,31 @@
+{
+    "name": "surya95/paymentgateway",
+    "description": "For Indian Merchants Only.",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "shubhamsurya95",
+            "email": "shubhamsurya95@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "surya95\\paymentgateway\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            
+        }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "surya95\\paymentgateway\\PaymentGatewayServiceProvider"
+            ]
+        }
+    },
+    "require": {}
+}
