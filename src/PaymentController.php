@@ -9,6 +9,6 @@ class PaymentController extends Controller
 {
     public function index()
     {
-    	dd('check');
+    	dd('check is payment');
     }
 }

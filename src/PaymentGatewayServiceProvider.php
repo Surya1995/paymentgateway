@@ -13,7 +13,7 @@ class PaymentGatewayServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        include __DIR__.'/routes/web.php';
+        
         //$this->app->make('surya95\paymentgateway\PaymentController');
     }
 
@@ -24,6 +24,6 @@ class PaymentGatewayServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        
+        $this->loadRoutesFrom(__DIR__.'/routes/web.php');
     }
 }
