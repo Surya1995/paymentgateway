@@ -39,6 +39,8 @@ class PaymentController extends Controller
 	            'response' => 'ok',
 	            'message' => $validator->messages()->first(),   
 	        ];
+
+	        return response()->json($messages);
 	    }
 	    else
 	    {
@@ -52,10 +54,13 @@ class PaymentController extends Controller
 			$paramList["INDUSTRY_TYPE_ID"] = PAYTM_INDUSTRY_TYPE_ID;
 			$paramList["CHANNEL_ID"] = PAYTM_CHANNEL_ID;
 			$paramList["WEBSITE"] = PAYTM_MERCHANT_WEBSITE;
+			$paramList["CALLBACK_URL"] = PAYTM_CALLBACK_URL;
 
 			$checkSum = getChecksumFromArray($paramList, PAYTM_MERCHANT_KEY);
 
-			$client = new Client();
+			$url = PAYTM_TXN_URL;
+
+			/*$client = new Client();
 			$response = $client->request('POST', PAYTM_TXN_URL, [
 						    'form_params' => [
 						        'MID' => $paramList["MID"],
@@ -65,15 +70,16 @@ class PaymentController extends Controller
 						        'INDUSTRY_TYPE_ID' => $paramList["INDUSTRY_TYPE_ID"],
 						        'CHANNEL_ID' => $paramList["CHANNEL_ID"],
 						        'WEBSITE' => $paramList["WEBSITE"],
+						        'CALLBACK_URL' => $paramList["CALLBACK_URL"],
 						        'CHECKSUMHASH' => $checkSum
 						    ]
-						]);
+						]);*/
+
+			return view('paytm.index', compact('paramList', 'checkSum', 'url'));
 
 			//echo $response->getStatusCode(); # 200
 			//echo $response->getHeaderLine('content-type'); # 'application/json; charset=utf8'
-			echo $response->getBody(); # '{"id": 1420053, "name": "guzzle", ...}'
+			//echo $response->getBody(); # '{"id": 1420053, "name": "guzzle", ...}'
 		}
-
-	    //return response()->json($messages);
     }
 }
