@@ -35,8 +35,7 @@ class PaymentController extends Controller
 	    if($validator->fails())
 	    {
 	        $messages = [
-	        	'status' => 200,
-	            'response' => 'ok',
+	        	'status' => false,
 	            'message' => $validator->messages()->first(),   
 	        ];
 
@@ -77,5 +76,76 @@ class PaymentController extends Controller
 		$isValidChecksum = verifychecksum_e($paramList, PAYTM_MERCHANT_KEY, $paytmChecksum); //will return TRUE or FALSE string.
 
 		return view('surya95::callback', compact('paytmChecksum', 'paramList', 'isValidChecksum'));
+    }
+
+    public function txnStatus(Request $request)
+    {
+    	header("Pragma: no-cache");
+		header("Cache-Control: no-cache");
+		header("Expires: 0");
+
+    	return view('surya95::txnstatus');
+    }
+
+    public function txnStatusResponse(Request $request)
+    {
+    	$validator = Validator::make(request()->all(), [
+  	    	'ORDER_ID' => 'required|integer',
+      	]);
+
+	    if($validator->fails())
+	    {
+	        $messages = [
+	        	'status' => false,
+	            'message' => $validator->messages()->first(),   
+	        ];
+	    }
+	    else
+	    {
+	    	$ORDER_ID = "";
+			$requestParamList = array();
+			$responseParamList = array();
+
+			if(isset($request->ORDER_ID) && $request->ORDER_ID != "") 
+			{
+				// In Test Page, we are taking parameters from POST request. In actual implementation these can be collected from session or DB. 
+				$ORDER_ID = $request->ORDER_ID;
+
+				// Create an array having all required parameters for status query.
+				$requestParamList = array("MID" => PAYTM_MERCHANT_MID , "ORDERID" => $ORDER_ID);  
+				
+				$StatusCheckSum = getChecksumFromArray($requestParamList,PAYTM_MERCHANT_KEY);
+				
+				$requestParamList['CHECKSUMHASH'] = $StatusCheckSum;
+
+				// Call the PG's getTxnStatusNew() function for verifying the transaction status.
+				$responseParamList = getTxnStatusNew($requestParamList);
+
+				if(isset($responseParamList) && count($responseParamList) > 0)
+				{
+					$messages = [
+			        	'status' => true,
+			            'message' => 'Successfully Found',
+			            'data' => $responseParamList
+			        ];
+				}
+				else
+				{
+					$messages = [
+			        	'status' => false,
+			            'message' => 'responseParamList Not Found'
+			        ];
+				}
+			}
+			else
+			{
+				$messages = [
+		        	'status' => false,
+		            'message' => 'ORDER ID Not Found' 
+		        ];
+			}
+	    }
+
+	    return response()->json($messages);
     }
 }
