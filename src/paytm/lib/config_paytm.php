@@ -25,5 +25,5 @@ define('PAYTM_REFUND_URL', '');
 define('PAYTM_STATUS_QUERY_URL', $PAYTM_STATUS_QUERY_NEW_URL);
 define('PAYTM_STATUS_QUERY_NEW_URL', $PAYTM_STATUS_QUERY_NEW_URL);
 define('PAYTM_TXN_URL', $PAYTM_TXN_URL);
-define('PAYTM_CALLBACK_URL', 'https://webhook.site/420c463f-3306-4310-ade0-5bc558555ab2');
+define('PAYTM_CALLBACK_URL', 'http://127.0.0.1:8000/callback');
 ?>
