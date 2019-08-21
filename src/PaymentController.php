@@ -60,26 +60,12 @@ class PaymentController extends Controller
 
 			$url = PAYTM_TXN_URL;
 
-			/*$client = new Client();
-			$response = $client->request('POST', PAYTM_TXN_URL, [
-						    'form_params' => [
-						        'MID' => $paramList["MID"],
-						        'ORDER_ID' => $paramList["ORDER_ID"],
-						        'CUST_ID' => $paramList["CUST_ID"],
-						        'TXN_AMOUNT' => $paramList["TXN_AMOUNT"],
-						        'INDUSTRY_TYPE_ID' => $paramList["INDUSTRY_TYPE_ID"],
-						        'CHANNEL_ID' => $paramList["CHANNEL_ID"],
-						        'WEBSITE' => $paramList["WEBSITE"],
-						        'CALLBACK_URL' => $paramList["CALLBACK_URL"],
-						        'CHECKSUMHASH' => $checkSum
-						    ]
-						]);*/
-
-			return view('paytm.index', compact('paramList', 'checkSum', 'url'));
-
-			//echo $response->getStatusCode(); # 200
-			//echo $response->getHeaderLine('content-type'); # 'application/json; charset=utf8'
-			//echo $response->getBody(); # '{"id": 1420053, "name": "guzzle", ...}'
+			return view('surya95::index', compact('paramList', 'checkSum', 'url'));
 		}
+    }
+
+    public function callBack(Request $request)
+    {
+    	dd($request);
     }
 }

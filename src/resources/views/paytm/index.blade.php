@@ -11,7 +11,7 @@
 			@foreach($paramList as $name => $value)
 				<input type="hidden" name="{{ $name }}" value="{{ $value }}">
 			@endforeach	
-				<input type="hidden" name="CHECKSUMHASH" value="{{ $checksum }}">
+				<input type="hidden" name="CHECKSUMHASH" value="{{ $checkSum }}">
 
 		</form>
 
